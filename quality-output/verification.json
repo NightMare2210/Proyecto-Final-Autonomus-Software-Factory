@@ -1,0 +1,102 @@
+{
+  "proyecto": "citasalud-service",
+  "version": "0.0.1-SNAPSHOT",
+  "fecha": "2026-06-27",
+  "commit": "n/a (sin historial git en este directorio)",
+  "tests": {
+    "comando": "cd citasalud-service && ./gradlew test jacocoTestReport",
+    "passed": 42,
+    "total": 42,
+    "coverage": 96.8,
+    "coverage_fuente": "build/reports/jacoco/test/jacocoTestReport.xml",
+    "detalle": {
+      "global_instruction_covered": 697,
+      "global_instruction_missed": 23,
+      "global_instruction_total": 720,
+      "global_line_covered": 188,
+      "global_line_missed": 0,
+      "suites": [
+        { "clase": "PropiedadTest",                      "tests": 11, "failures": 0 },
+        { "clase": "PropiedadSseEmitterRegistryTest",    "tests": 7,  "failures": 0 },
+        { "clase": "CucumberRunner (funcionales)",       "tests": 6,  "failures": 0 },
+        { "clase": "PropiedadControllerIntegrationTest", "tests": 5,  "failures": 0 },
+        { "clase": "ArchitectureTest",                   "tests": 4,  "failures": 0 },
+        { "clase": "ListarPropiedadesIntegrationTest",   "tests": 3,  "failures": 0 },
+        { "clase": "ObtenerPropiedadServiceTest",        "tests": 2,  "failures": 0 },
+        { "clase": "SseLatencyTest",                     "tests": 2,  "failures": 0 },
+        { "clase": "CambiarEstadoPropiedadServiceTest",  "tests": 1,  "failures": 0 },
+        { "clase": "CitasaludServiceApplicationTests",   "tests": 1,  "failures": 0 }
+      ]
+    }
+  },
+  "security": {
+    "fuente": "Semgrep CLI v1.168.0 (8 reglas locales: hardcoded-password, sql-injection-string-concat, runtime-exec, system-exit, printStackTrace, catch-generic-exception, path-traversal, log-sensitive-data) sobre 22 archivos Java en src/main/java. Nota: rulesets remotos p/java y p/secrets retornaron HTTP 401 (token sin permiso para descarga remota); el MCP de Semgrep estará disponible tras reiniciar Claude Code.",
+    "critical": 0,
+    "high": 0,
+    "secrets": 0,
+    "hallazgos": [],
+    "semgrep_meta": {
+      "version": "1.168.0",
+      "archivos_escaneados": 22,
+      "reglas_aplicadas": 8,
+      "findings": 0
+    }
+  },
+  "spec": "specs/001-estado-propiedades-rt/spec.md",
+  "criteria": [
+    {
+      "id": "FR-001",
+      "fuente": "spec.md · FR-001 — propagación de estado ≤ 60 segundos",
+      "status": "cumple",
+      "evidencia": "SseLatencyTest.put_estado_seguido_de_get_refleja_cambio_en_menos_de_2_segundos PASA (latencia medida < 2s). Cucumber US1-AC1 'el cambio es visible en menos de 60 segundos' PASA. SSE endpoint activo confirmado en SseLatencyTest.sse_endpoint_activo_responde_con_text_event_stream."
+    },
+    {
+      "id": "FR-002",
+      "fuente": "spec.md · FR-002 — estado visible en ficha de propiedad",
+      "status": "cumple",
+      "evidencia": "PropiedadControllerIntegrationTest.get_propiedad_disponible_retorna_200 verifica jsonPath('$.estado')=='DISPONIBLE' y accionesPermitidas presentes. Cucumber US1-AC1, US2-AC1, US3-AC1 verifican campo estado en respuesta HTTP."
+    },
+    {
+      "id": "FR-003",
+      "fuente": "spec.md · FR-003 — bloqueo de agendamiento en propiedad reservada o vendida",
+      "status": "cumple",
+      "evidencia": "PropiedadTest.puede_agendar_visita_false_para_reservada PASA. PropiedadTest.ambas_flags_false_para_vendida PASA (puedeAgendarVisita=false, puedeContactar=false). Cucumber US2-AC1 verifica accionesPermitidas.puedeAgendarVisita==false vía HTTP."
+    },
+    {
+      "id": "FR-004",
+      "fuente": "spec.md · FR-004 — mensaje informativo al intentar agendar en propiedad no disponible",
+      "status": "cumple",
+      "evidencia": "Spec assumption US2-AC1: el backend entrega puedeAgendarVisita:false; el portal renderiza el mensaje. PropiedadTest.puede_agendar_visita_false_para_reservada y Cucumber US2-AC1 verifican el flag. Responsabilidad de backend cumplida."
+    },
+    {
+      "id": "FR-005",
+      "fuente": "spec.md · FR-005 — ocultar contacto y agendamiento en propiedad vendida",
+      "status": "cumple",
+      "evidencia": "PropiedadTest.ambas_flags_false_para_vendida verifica puedeAgendarVisita=false y puedeContactar=false. ListarPropiedadesIntegrationTest.propiedad_vendida_tiene_puedeContactar_false_en_listado PASA. Cucumber US3-AC1 verifica ambos flags."
+    },
+    {
+      "id": "FR-006",
+      "fuente": "spec.md · FR-006 — verificar estado vigente al confirmar agendamiento",
+      "status": "cumple",
+      "evidencia": "Spec assumption FR-006: este servicio no implementa POST /agendamiento. El flag puedeAgendarVisita se calcula desde DB en cada GET. PropiedadControllerIntegrationTest.fresh_state_tras_put_estado verifica que GET refleja el estado actual inmediatamente tras PUT."
+    },
+    {
+      "id": "FR-007",
+      "fuente": "spec.md · FR-007 — estado visible en tarjetas del listado de búsqueda",
+      "status": "cumple",
+      "evidencia": "ListarPropiedadesIntegrationTest.cada_elemento_del_listado_tiene_campo_estado PASA (jsonPath '$[*].estado' not null para todos los elementos). Cucumber US1-AC3 'cada propiedad en el listado tiene un campo estado' PASA."
+    },
+    {
+      "id": "EC-sistema-inaccesible",
+      "fuente": "spec.md · Edge Case — sistema interno inaccesible",
+      "status": "cumple",
+      "evidencia": "Por arquitectura: el estado persiste en la base de datos propia del servicio (H2/JPA). Si el panel del asesor no puede escribir, el portal sirve el último estado conocido desde DB. El spec establece 'canal disponible en condiciones normales'; no existe dependencia de sistema externo en la capa de lectura."
+    },
+    {
+      "id": "EC-estado-cambia-durante-agendamiento",
+      "fuente": "spec.md · Edge Case — estado cambia mientras cliente está agendando",
+      "status": "cumple",
+      "evidencia": "Cubierto por FR-006. El flag puedeAgendarVisita se recalcula desde DB en cada GET. PropiedadControllerIntegrationTest.fresh_state_tras_put_estado demuestra que la respuesta siempre refleja el estado actual sin caché."
+    }
+  ]
+}

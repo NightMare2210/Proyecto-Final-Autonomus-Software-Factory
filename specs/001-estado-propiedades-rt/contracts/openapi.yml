@@ -1,0 +1,310 @@
+openapi: "3.0.3"
+
+info:
+  title: CitaSalud — Propiedades API
+  version: "1.0.0"
+  description: |
+    API para consulta y gestión del estado de propiedades inmobiliarias.
+    Expone endpoints para el portal de clientes (lectura) y el panel de asesores (escritura),
+    así como un stream de eventos en tiempo real vía Server-Sent Events (SSE).
+
+servers:
+  - url: http://localhost:8080
+    description: Entorno local de desarrollo
+
+tags:
+  - name: propiedades
+    description: Operaciones sobre propiedades inmobiliarias
+  - name: estado
+    description: Gestión y notificación del estado de una propiedad
+
+paths:
+
+  /api/v1/propiedades:
+    get:
+      operationId: listarPropiedades
+      summary: Listar todas las propiedades con su estado actual
+      description: |
+        Retorna el listado de todas las propiedades del sistema, incluyendo el estado
+        comercial de cada una. Permite al cliente identificar el estado (DISPONIBLE,
+        RESERVADA o VENDIDA) en la vista de resultados de búsqueda, sin necesidad de
+        abrir la ficha individual. Cubre FR-007 y US3-AC3.
+        Acceso público — no requiere autenticación.
+      tags:
+        - propiedades
+      responses:
+        "200":
+          description: Lista de propiedades con estado actual
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PropiedadResumenResponse"
+
+  /api/v1/propiedades/{id}:
+    get:
+      operationId: obtenerPropiedad
+      summary: Obtener detalles de una propiedad
+      description: |
+        Retorna los detalles completos de una propiedad, incluyendo su estado comercial actual
+        (DISPONIBLE, RESERVADA o VENDIDA). Acceso público — no requiere autenticación.
+      tags:
+        - propiedades
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador único de la propiedad (UUID)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Propiedad encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropiedadResponse"
+        "404":
+          description: Propiedad no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/propiedades/{id}/estado:
+    put:
+      operationId: cambiarEstadoPropiedad
+      summary: Cambiar el estado de una propiedad
+      description: |
+        Permite a un asesor actualizar el estado comercial de una propiedad.
+        El cambio se propaga a todos los clientes suscritos al stream SSE de esa propiedad
+        en tiempo real (< 1 segundo desde la persistencia).
+        Endpoint de uso exclusivo para asesores — requiere autenticación (fuera del alcance del MVP).
+      tags:
+        - estado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador único de la propiedad (UUID)
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CambiarEstadoRequest"
+      responses:
+        "200":
+          description: Estado actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropiedadResponse"
+        "400":
+          description: Transición de estado inválida (ej. VENDIDA → DISPONIBLE)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Propiedad no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "409":
+          description: Conflicto — la propiedad ya se encuentra en ese estado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /api/v1/propiedades/{id}/estado/stream:
+    get:
+      operationId: streamEstadoPropiedad
+      summary: Stream de cambios de estado en tiempo real (SSE)
+      description: |
+        Endpoint Server-Sent Events (SSE). Emite un evento cada vez que el estado de la
+        propiedad cambia. El cliente se conecta una vez y recibe actualizaciones en tiempo
+        real sin necesidad de polling.
+        Tipo de contenido de respuesta: `text/event-stream`.
+        Cada evento tiene el tipo `estado-cambiado` y el cuerpo es un JSON serializado
+        de `EstadoUpdateEvent`.
+      tags:
+        - estado
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identificador único de la propiedad (UUID)
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Stream SSE activo
+          content:
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/EstadoUpdateEvent"
+        "404":
+          description: Propiedad no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+
+    EstadoPropiedad:
+      type: string
+      enum:
+        - DISPONIBLE
+        - RESERVADA
+        - VENDIDA
+      description: |
+        Estado comercial de la propiedad:
+        - DISPONIBLE: la propiedad está libre para visita y contacto.
+        - RESERVADA: tiene una reserva activa; no se puede agendar visita.
+        - VENDIDA: estado terminal; no se permite ningún tipo de contacto.
+
+    PropiedadResponse:
+      type: object
+      required:
+        - id
+        - nombre
+        - descripcion
+        - precio
+        - estado
+        - ultimaActualizacion
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único de la propiedad
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        nombre:
+          type: string
+          maxLength: 150
+          description: Nombre o título de la propiedad
+          example: "Apartamento Sector Norte — Piso 4"
+        descripcion:
+          type: string
+          maxLength: 2000
+          description: Descripción completa de la propiedad
+          example: "Apartamento de 3 habitaciones con vista panorámica, cocina integral..."
+        precio:
+          type: number
+          format: double
+          description: Precio de lista en moneda local
+          example: 285000000
+        estado:
+          $ref: "#/components/schemas/EstadoPropiedad"
+        ultimaActualizacion:
+          type: string
+          format: date-time
+          description: Timestamp ISO 8601 del último cambio de estado
+          example: "2026-06-27T14:30:00Z"
+        accionesPermitidas:
+          type: object
+          description: Flags que indican qué acciones están habilitadas para el cliente
+          properties:
+            puedeAgendarVisita:
+              type: boolean
+              description: true solo si estado es DISPONIBLE
+              example: true
+            puedeContactar:
+              type: boolean
+              description: true solo si estado no es VENDIDA
+              example: true
+
+    CambiarEstadoRequest:
+      type: object
+      required:
+        - estado
+      properties:
+        estado:
+          $ref: "#/components/schemas/EstadoPropiedad"
+
+    EstadoUpdateEvent:
+      type: object
+      required:
+        - propiedadId
+        - estado
+        - timestamp
+      properties:
+        propiedadId:
+          type: string
+          format: uuid
+          description: ID de la propiedad cuyo estado cambió
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        estado:
+          $ref: "#/components/schemas/EstadoPropiedad"
+        timestamp:
+          type: string
+          format: date-time
+          description: Momento exacto del cambio
+          example: "2026-06-27T14:30:00Z"
+
+    PropiedadResumenResponse:
+      type: object
+      description: Vista resumida de una propiedad para el listado de búsqueda
+      required:
+        - id
+        - nombre
+        - precio
+        - estado
+        - accionesPermitidas
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        nombre:
+          type: string
+          maxLength: 150
+          example: "Apartamento Sector Norte — Piso 4"
+        precio:
+          type: number
+          format: double
+          example: 285000000
+        estado:
+          $ref: "#/components/schemas/EstadoPropiedad"
+        accionesPermitidas:
+          type: object
+          required:
+            - puedeAgendarVisita
+            - puedeContactar
+          properties:
+            puedeAgendarVisita:
+              type: boolean
+              example: true
+            puedeContactar:
+              type: boolean
+              example: true
+
+    ErrorResponse:
+      type: object
+      required:
+        - codigo
+        - mensaje
+        - timestamp
+      properties:
+        codigo:
+          type: string
+          description: Código de error interno
+          example: "PROPIEDAD_NO_ENCONTRADA"
+        mensaje:
+          type: string
+          description: Descripción legible del error
+          example: "No se encontró una propiedad con el id especificado"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-06-27T14:30:00Z"

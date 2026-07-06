@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: citasalud-service
+
+  datasource:
+    url: jdbc:h2:mem:citasaluddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  sql:
+    init:
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/data.sql
+      mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+
+  mvc:
+    async:
+      request-timeout: -1

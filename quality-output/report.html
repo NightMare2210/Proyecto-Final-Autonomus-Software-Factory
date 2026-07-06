@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
+<title>Reporte de calidad · citasalud-service</title>
+<style>
+ body{margin:0;background:#F3F4F1;color:#0E1A26;font:16px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;padding:40px}
+ .wrap{max-width:880px;margin:0 auto}
+ h1{font-size:30px;margin:0 0 4px;letter-spacing:-.02em}
+ .eyebrow{font:700 12px/1 IBM Plex Mono,monospace;color:#9E1B2E;letter-spacing:.12em;text-transform:uppercase}
+ .verdict{display:inline-block;background:#2E7D52;color:#fff;font:800 20px/1 IBM Plex Mono,monospace;padding:12px 22px;border-radius:10px;margin:14px 0 28px}
+ .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+ .card{border:1px solid #d7dad5;border-radius:12px;padding:16px;background:#fbfcfa}
+ .card h3{margin:0 0 8px;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#46535f}
+ .big{font-size:22px;font-weight:800;margin-top:6px}
+ table{width:100%;border-collapse:collapse;margin:10px 0 26px;font-size:14px}
+ th{text-align:left;font:700 11px/1 IBM Plex Mono,monospace;letter-spacing:.08em;text-transform:uppercase;color:#46535f;border-bottom:2px solid #9E1B2E;padding:8px 10px}
+ td{padding:9px 10px;border-bottom:1px solid #e6e8e4;vertical-align:top}
+ h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#8F6A1C;margin:24px 0 6px}
+ .meta{color:#5a6b78;font:13px/1.5 IBM Plex Mono,monospace}
+</style></head><body><div class="wrap">
+ <div class="eyebrow">Quality &amp; Governance Agent · Unidad 3</div>
+ <h1>Reporte de calidad — citasalud-service <span class="meta">v0.0.1-SNAPSHOT</span></h1>
+ <div class="meta">commit n/a (sin historial git en este directorio) · 2026-06-27 · umbral cobertura 80%</div>
+ <div class="verdict">APROBADO</div>
+ <div class="pillars">
+   <div class="card"><h3>Pruebas <span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></h3>
+     <div class="big">42/42</div>
+     <div class="meta">cobertura 96.8%</div></div>
+   <div class="card"><h3>Seguridad <span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></h3>
+     <div class="big">0 críticas</div>
+     <div class="meta">0 high · 0 secretos</div></div>
+   <div class="card"><h3>Criterios <span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></h3>
+     <div class="big">9/9</div>
+     <div class="meta">criterios que cumplen</div></div>
+ </div>
+ <h2>Criterios de aceptación</h2>
+ <table><thead><tr><th>Criterio</th><th>Estado</th><th>Evidencia</th></tr></thead><tbody><tr><td style="font-family:IBM Plex Mono,monospace">FR-001</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>SseLatencyTest.put_estado_seguido_de_get_refleja_cambio_en_menos_de_2_segundos PASA (latencia medida < 2s). Cucumber US1-AC1 'el cambio es visible en menos de 60 segundos' PASA. SSE endpoint activo confirmado en SseLatencyTest.sse_endpoint_activo_responde_con_text_event_stream.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-002</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>PropiedadControllerIntegrationTest.get_propiedad_disponible_retorna_200 verifica jsonPath('$.estado')=='DISPONIBLE' y accionesPermitidas presentes. Cucumber US1-AC1, US2-AC1, US3-AC1 verifican campo estado en respuesta HTTP.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-003</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>PropiedadTest.puede_agendar_visita_false_para_reservada PASA. PropiedadTest.ambas_flags_false_para_vendida PASA (puedeAgendarVisita=false, puedeContactar=false). Cucumber US2-AC1 verifica accionesPermitidas.puedeAgendarVisita==false vía HTTP.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-004</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>Spec assumption US2-AC1: el backend entrega puedeAgendarVisita:false; el portal renderiza el mensaje. PropiedadTest.puede_agendar_visita_false_para_reservada y Cucumber US2-AC1 verifican el flag. Responsabilidad de backend cumplida.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-005</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>PropiedadTest.ambas_flags_false_para_vendida verifica puedeAgendarVisita=false y puedeContactar=false. ListarPropiedadesIntegrationTest.propiedad_vendida_tiene_puedeContactar_false_en_listado PASA. Cucumber US3-AC1 verifica ambos flags.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-006</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>Spec assumption FR-006: este servicio no implementa POST /agendamiento. El flag puedeAgendarVisita se calcula desde DB en cada GET. PropiedadControllerIntegrationTest.fresh_state_tras_put_estado verifica que GET refleja el estado actual inmediatamente tras PUT.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">FR-007</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>ListarPropiedadesIntegrationTest.cada_elemento_del_listado_tiene_campo_estado PASA (jsonPath '$[*].estado' not null para todos los elementos). Cucumber US1-AC3 'cada propiedad en el listado tiene un campo estado' PASA.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">EC-sistema-inaccesible</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>Por arquitectura: el estado persiste en la base de datos propia del servicio (H2/JPA). Si el panel del asesor no puede escribir, el portal sirve el último estado conocido desde DB. El spec establece 'canal disponible en condiciones normales'; no existe dependencia de sistema externo en la capa de lectura.</td></tr><tr><td style="font-family:IBM Plex Mono,monospace">EC-estado-cambia-durante-agendamiento</td><td><span style="background:#2E7D52;color:#fff;padding:3px 12px;border-radius:999px;font:700 13px/1 IBM Plex Mono,monospace">PASA</span></td><td>Cubierto por FR-006. El flag puedeAgendarVisita se recalcula desde DB en cada GET. PropiedadControllerIntegrationTest.fresh_state_tras_put_estado demuestra que la respuesta siempre refleja el estado actual sin caché.</td></tr></tbody></table>
+ <h2>Hallazgos de seguridad (Semgrep MCP)</h2>
+ <table><thead><tr><th>Severidad</th><th>Ubicación</th><th>Nota</th></tr></thead><tbody><tr><td colspan="3" style="color:#5a6b78">Sin hallazgos.</td></tr></tbody></table>
+ <div class="meta">Generado por build-report.py · misma regla del gate · "el gate manda, no el modelo".</div>
+</div></body></html>

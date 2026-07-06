@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.unit.application.ObtenerPropiedadServiceTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.445Z" hostname="MacBook-Pro-de-Brando.local" time="0.002">
+  <properties/>
+  <testcase name="lanza_excepcion_cuando_id_no_existe()" classname="org.ups.citasaludservice.unit.application.ObtenerPropiedadServiceTest" time="0.001"/>
+  <testcase name="devuelve_propiedad_cuando_existe()" classname="org.ups.citasaludservice.unit.application.ObtenerPropiedadServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

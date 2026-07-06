@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SsePropiedadEmitterAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">citasalud-service</a> &gt; <a href="index.source.html" class="el_package">org.ups.citasaludservice.infrastructure.adapter.out.sse</a> &gt; <span class="el_source">SsePropiedadEmitterAdapter.java</span></div><h1>SsePropiedadEmitterAdapter.java</h1><pre class="source lang-java linenums">package org.ups.citasaludservice.infrastructure.adapter.out.sse;
+
+import org.springframework.stereotype.Component;
+import org.ups.citasaludservice.domain.event.PropiedadEstadoCambiado;
+import org.ups.citasaludservice.domain.port.out.PropiedadEventPublisherPort;
+
+import java.time.ZoneOffset;
+import java.util.UUID;
+
+@Component
+public class SsePropiedadEmitterAdapter implements PropiedadEventPublisherPort {
+
+    private final PropiedadSseEmitterRegistry registry;
+
+<span class="fc" id="L15">    public SsePropiedadEmitterAdapter(PropiedadSseEmitterRegistry registry) {</span>
+<span class="fc" id="L16">        this.registry = registry;</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public void publicar(PropiedadEstadoCambiado evento) {
+<span class="fc" id="L21">        var genEstado = org.ups.citasaludservice.generated.model.EstadoPropiedad</span>
+<span class="fc" id="L22">            .valueOf(evento.nuevoEstado().name());</span>
+
+<span class="fc" id="L24">        var dto = new org.ups.citasaludservice.generated.model.EstadoUpdateEvent()</span>
+<span class="fc" id="L25">            .propiedadId(UUID.fromString(evento.propiedadId()))</span>
+<span class="fc" id="L26">            .estado(genEstado)</span>
+<span class="fc" id="L27">            .timestamp(evento.timestamp().atOffset(ZoneOffset.UTC));</span>
+
+<span class="fc" id="L29">        registry.notificar(evento.propiedadId(), dto);</span>
+<span class="fc" id="L30">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

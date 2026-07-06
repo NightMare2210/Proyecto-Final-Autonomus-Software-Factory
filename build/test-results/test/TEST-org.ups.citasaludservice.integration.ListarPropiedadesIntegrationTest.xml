@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.097Z" hostname="MacBook-Pro-de-Brando.local" time="0.193">
+  <properties/>
+  <testcase name="cada_elemento_del_listado_tiene_campo_estado()" classname="org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest" time="0.019"/>
+  <testcase name="propiedad_vendida_tiene_puedeContactar_false_en_listado()" classname="org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest" time="0.006"/>
+  <testcase name="get_propiedades_retorna_array_de_3_elementos()" classname="org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest" time="0.003"/>
+  <system-out><![CDATA[2026-07-05T22:59:26.098-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest]: ListarPropiedadesIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.101-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest
+2026-07-05T22:59:26.101-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest]: ListarPropiedadesIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.102-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.ListarPropiedadesIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-05T22:59:26.112-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.i.ListarPropiedadesIntegrationTest : Starting ListarPropiedadesIntegrationTest using Java 26.0.1 with PID 64457 (started by brando in /Users/brando/Desktop/Maestria-Software/Ingenieria-Software/Unidad-3-Practica/citasalud-service)
+2026-07-05T22:59:26.112-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.i.ListarPropiedadesIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2026-07-05T22:59:26.155-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05T22:59:26.159-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interface.
+2026-07-05T22:59:26.193-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2026-07-05T22:59:26.194-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection conn14: url=jdbc:h2:mem:citasaluddb user=SA
+2026-07-05T22:59:26.195-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2026-07-05T22:59:26.201-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-05T22:59:26.209-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05T22:59:26.210-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:citasaluddb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: CITASALUDDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-05T22:59:26.220-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05T22:59:26.220-05:00  INFO 64457 --- [citasalud-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05T22:59:26.233-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-07-05T22:59:26.256-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-07-05T22:59:26.256-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-07-05T22:59:26.256-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-07-05T22:59:26.261-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.i.ListarPropiedadesIntegrationTest : Started ListarPropiedadesIntegrationTest in 0.158 seconds (process running for 3.176)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

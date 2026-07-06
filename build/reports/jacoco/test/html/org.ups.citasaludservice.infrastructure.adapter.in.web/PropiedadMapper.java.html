@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropiedadMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">citasalud-service</a> &gt; <a href="index.source.html" class="el_package">org.ups.citasaludservice.infrastructure.adapter.in.web</a> &gt; <span class="el_source">PropiedadMapper.java</span></div><h1>PropiedadMapper.java</h1><pre class="source lang-java linenums">package org.ups.citasaludservice.infrastructure.adapter.in.web;
+
+import org.ups.citasaludservice.domain.model.Propiedad;
+import org.ups.citasaludservice.generated.model.AccionesPermitidas;
+import org.ups.citasaludservice.generated.model.EstadoUpdateEvent;
+import org.ups.citasaludservice.generated.model.PropiedadResumenResponse;
+import org.ups.citasaludservice.generated.model.PropiedadResponse;
+
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.UUID;
+
+public class PropiedadMapper {
+
+    private PropiedadMapper() {}
+
+    public static PropiedadResponse toResponse(Propiedad p) {
+<span class="fc" id="L18">        var acciones = p.accionesPermitidas();</span>
+<span class="fc" id="L19">        var genEstado = org.ups.citasaludservice.generated.model.EstadoPropiedad</span>
+<span class="fc" id="L20">            .valueOf(p.getEstado().name());</span>
+
+<span class="fc" id="L22">        return new PropiedadResponse()</span>
+<span class="fc" id="L23">            .id(UUID.fromString(p.getId()))</span>
+<span class="fc" id="L24">            .nombre(p.getNombre())</span>
+<span class="fc" id="L25">            .descripcion(p.getDescripcion())</span>
+<span class="fc" id="L26">            .precio(p.getPrecio().doubleValue())</span>
+<span class="fc" id="L27">            .estado(genEstado)</span>
+<span class="fc" id="L28">            .ultimaActualizacion(p.getUltimaActualizacion().atOffset(ZoneOffset.UTC))</span>
+<span class="fc" id="L29">            .accionesPermitidas(new AccionesPermitidas()</span>
+<span class="fc" id="L30">                .puedeAgendarVisita(acciones.puedeAgendarVisita())</span>
+<span class="fc" id="L31">                .puedeContactar(acciones.puedeContactar()));</span>
+    }
+
+    public static PropiedadResumenResponse toResumen(Propiedad p) {
+<span class="fc" id="L35">        var acciones = p.accionesPermitidas();</span>
+<span class="fc" id="L36">        var genEstado = org.ups.citasaludservice.generated.model.EstadoPropiedad</span>
+<span class="fc" id="L37">            .valueOf(p.getEstado().name());</span>
+
+<span class="fc" id="L39">        return new PropiedadResumenResponse()</span>
+<span class="fc" id="L40">            .id(UUID.fromString(p.getId()))</span>
+<span class="fc" id="L41">            .nombre(p.getNombre())</span>
+<span class="fc" id="L42">            .precio(p.getPrecio().doubleValue())</span>
+<span class="fc" id="L43">            .estado(genEstado)</span>
+<span class="fc" id="L44">            .accionesPermitidas(new AccionesPermitidas()</span>
+<span class="fc" id="L45">                .puedeAgendarVisita(acciones.puedeAgendarVisita())</span>
+<span class="fc" id="L46">                .puedeContactar(acciones.puedeContactar()));</span>
+    }
+
+    public static List&lt;PropiedadResumenResponse&gt; toResumenList(List&lt;Propiedad&gt; propiedades) {
+<span class="fc" id="L50">        return propiedades.stream().map(PropiedadMapper::toResumen).toList();</span>
+    }
+
+    public static EstadoUpdateEvent toEstadoUpdateEvent(Propiedad p) {
+<span class="fc" id="L54">        var genEstado = org.ups.citasaludservice.generated.model.EstadoPropiedad</span>
+<span class="fc" id="L55">            .valueOf(p.getEstado().name());</span>
+<span class="fc" id="L56">        return new EstadoUpdateEvent()</span>
+<span class="fc" id="L57">            .propiedadId(UUID.fromString(p.getId()))</span>
+<span class="fc" id="L58">            .estado(genEstado)</span>
+<span class="fc" id="L59">            .timestamp(p.getUltimaActualizacion().atOffset(ZoneOffset.UTC));</span>
+    }
+
+    public static org.ups.citasaludservice.domain.model.EstadoPropiedad toDomainEstado(
+            org.ups.citasaludservice.generated.model.EstadoPropiedad generatedEstado) {
+<span class="fc" id="L64">        return org.ups.citasaludservice.domain.model.EstadoPropiedad</span>
+<span class="fc" id="L65">            .valueOf(generatedEstado.getValue());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

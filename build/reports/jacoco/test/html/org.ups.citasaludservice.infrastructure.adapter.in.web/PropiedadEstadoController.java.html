@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropiedadEstadoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">citasalud-service</a> &gt; <a href="index.source.html" class="el_package">org.ups.citasaludservice.infrastructure.adapter.in.web</a> &gt; <span class="el_source">PropiedadEstadoController.java</span></div><h1>PropiedadEstadoController.java</h1><pre class="source lang-java linenums">package org.ups.citasaludservice.infrastructure.adapter.in.web;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.ups.citasaludservice.domain.model.Propiedad;
+import org.ups.citasaludservice.domain.port.in.CambiarEstadoPropiedadUseCase;
+import org.ups.citasaludservice.domain.port.in.ObtenerPropiedadUseCase;
+import org.ups.citasaludservice.generated.model.CambiarEstadoRequest;
+import org.ups.citasaludservice.generated.model.PropiedadResponse;
+import org.ups.citasaludservice.infrastructure.adapter.out.sse.PropiedadSseEmitterRegistry;
+
+@RestController
+@RequestMapping(&quot;/api/v1/propiedades&quot;)
+public class PropiedadEstadoController {
+
+    private final CambiarEstadoPropiedadUseCase cambiarEstadoUseCase;
+    private final ObtenerPropiedadUseCase obtenerPropiedadUseCase;
+    private final PropiedadSseEmitterRegistry registry;
+
+    public PropiedadEstadoController(CambiarEstadoPropiedadUseCase cambiarEstadoUseCase,
+                                     ObtenerPropiedadUseCase obtenerPropiedadUseCase,
+<span class="fc" id="L24">                                     PropiedadSseEmitterRegistry registry) {</span>
+<span class="fc" id="L25">        this.cambiarEstadoUseCase = cambiarEstadoUseCase;</span>
+<span class="fc" id="L26">        this.obtenerPropiedadUseCase = obtenerPropiedadUseCase;</span>
+<span class="fc" id="L27">        this.registry = registry;</span>
+<span class="fc" id="L28">    }</span>
+
+    @PutMapping(&quot;/{id}/estado&quot;)
+    public ResponseEntity&lt;PropiedadResponse&gt; cambiarEstado(
+            @PathVariable String id,
+            @RequestBody CambiarEstadoRequest request) {
+<span class="fc" id="L34">        var domainEstado = PropiedadMapper.toDomainEstado(request.getEstado());</span>
+<span class="fc" id="L35">        Propiedad propiedad = cambiarEstadoUseCase.cambiarEstado(id, domainEstado);</span>
+<span class="fc" id="L36">        return ResponseEntity.ok(PropiedadMapper.toResponse(propiedad));</span>
+    }
+
+    @GetMapping(value = &quot;/{id}/estado/stream&quot;, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter streamEstado(@PathVariable String id) {
+<span class="fc" id="L41">        Propiedad propiedad = obtenerPropiedadUseCase.obtener(id);</span>
+<span class="fc" id="L42">        SseEmitter emitter = new SseEmitter(-1L);</span>
+
+<span class="fc" id="L44">        var initialEvent = SseEmitter.event()</span>
+<span class="fc" id="L45">            .name(&quot;estado-cambiado&quot;)</span>
+<span class="fc" id="L46">            .data(PropiedadMapper.toEstadoUpdateEvent(propiedad), MediaType.APPLICATION_JSON);</span>
+
+<span class="fc" id="L48">        registry.agregar(id, emitter, initialEvent);</span>
+
+<span class="pc" id="L50">        emitter.onCompletion(() -&gt; registry.remover(id, emitter));</span>
+<span class="pc" id="L51">        emitter.onTimeout(() -&gt; registry.remover(id, emitter));</span>
+<span class="pc" id="L52">        emitter.onError(ex -&gt; registry.remover(id, emitter));</span>
+
+<span class="fc" id="L54">        return emitter;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

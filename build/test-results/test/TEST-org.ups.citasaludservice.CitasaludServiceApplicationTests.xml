@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.CitasaludServiceApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:25.920Z" hostname="MacBook-Pro-de-Brando.local" time="0.176">
+  <properties/>
+  <testcase name="contextLoads()" classname="org.ups.citasaludservice.CitasaludServiceApplicationTests" time="0.008"/>
+  <system-out><![CDATA[2026-07-05T22:59:25.922-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.CitasaludServiceApplicationTests]: CitasaludServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:25.924-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.CitasaludServiceApplicationTests
+2026-07-05T22:59:25.925-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.CitasaludServiceApplicationTests]: CitasaludServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:25.925-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.CitasaludServiceApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-07-05T22:59:25.941-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.CitasaludServiceApplicationTests   : Starting CitasaludServiceApplicationTests using Java 26.0.1 with PID 64457 (started by brando in /Users/brando/Desktop/Maestria-Software/Ingenieria-Software/Unidad-3-Practica/citasalud-service)
+2026-07-05T22:59:25.941-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.CitasaludServiceApplicationTests   : No active profile set, falling back to 1 default profile: "default"
+2026-07-05T22:59:25.988-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-05T22:59:25.992-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 1 JPA repository interface.
+2026-07-05T22:59:26.009-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-07-05T22:59:26.010-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:citasaluddb user=SA
+2026-07-05T22:59:26.010-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-07-05T22:59:26.016-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-05T22:59:26.024-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-05T22:59:26.025-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:citasaluddb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: CITASALUDDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-05T22:59:26.034-05:00  INFO 64457 --- [citasalud-service] [    Test worker] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-05T22:59:26.035-05:00  INFO 64457 --- [citasalud-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05T22:59:26.054-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-07-05T22:59:26.083-05:00  INFO 64457 --- [citasalud-service] [    Test worker] o.u.c.CitasaludServiceApplicationTests   : Started CitasaludServiceApplicationTests in 0.151 seconds (process running for 2.999)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

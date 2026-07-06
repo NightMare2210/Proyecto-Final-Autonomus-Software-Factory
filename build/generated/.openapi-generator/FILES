@@ -1,0 +1,7 @@
+src/main/java/org/ups/citasaludservice/generated/model/AccionesPermitidas.java
+src/main/java/org/ups/citasaludservice/generated/model/CambiarEstadoRequest.java
+src/main/java/org/ups/citasaludservice/generated/model/ErrorResponse.java
+src/main/java/org/ups/citasaludservice/generated/model/EstadoPropiedad.java
+src/main/java/org/ups/citasaludservice/generated/model/EstadoUpdateEvent.java
+src/main/java/org/ups/citasaludservice/generated/model/PropiedadResponse.java
+src/main/java/org/ups/citasaludservice/generated/model/PropiedadResumenResponse.java

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PropiedadRepositoryAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">citasalud-service</a> &gt; <a href="index.source.html" class="el_package">org.ups.citasaludservice.infrastructure.adapter.out.persistence</a> &gt; <span class="el_source">PropiedadRepositoryAdapter.java</span></div><h1>PropiedadRepositoryAdapter.java</h1><pre class="source lang-java linenums">package org.ups.citasaludservice.infrastructure.adapter.out.persistence;
+
+import org.springframework.stereotype.Component;
+import org.ups.citasaludservice.domain.model.Propiedad;
+import org.ups.citasaludservice.domain.port.out.PropiedadRepositoryPort;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Optional;
+
+@Component
+public class PropiedadRepositoryAdapter implements PropiedadRepositoryPort {
+
+    private final PropiedadJpaRepository jpaRepository;
+
+<span class="fc" id="L17">    public PropiedadRepositoryAdapter(PropiedadJpaRepository jpaRepository) {</span>
+<span class="fc" id="L18">        this.jpaRepository = jpaRepository;</span>
+<span class="fc" id="L19">    }</span>
+
+    @Override
+    public Optional&lt;Propiedad&gt; findById(String id) {
+<span class="fc" id="L23">        return jpaRepository.findById(id).map(this::toDomain);</span>
+    }
+
+    @Override
+    public List&lt;Propiedad&gt; findAll() {
+<span class="fc" id="L28">        return jpaRepository.findAll().stream().map(this::toDomain).toList();</span>
+    }
+
+    @Override
+    public Propiedad save(Propiedad propiedad) {
+<span class="fc" id="L33">        return toDomain(jpaRepository.save(toJpa(propiedad)));</span>
+    }
+
+    private Propiedad toDomain(PropiedadJpaEntity entity) {
+<span class="fc" id="L37">        return new Propiedad(</span>
+<span class="fc" id="L38">            entity.getId(),</span>
+<span class="fc" id="L39">            entity.getNombre(),</span>
+<span class="fc" id="L40">            entity.getDescripcion(),</span>
+<span class="fc" id="L41">            entity.getPrecio(),</span>
+<span class="fc" id="L42">            entity.getEstado(),</span>
+<span class="fc" id="L43">            entity.getUltimaActualizacion().toInstant(ZoneOffset.UTC)</span>
+        );
+    }
+
+    private PropiedadJpaEntity toJpa(Propiedad propiedad) {
+<span class="fc" id="L48">        PropiedadJpaEntity entity = new PropiedadJpaEntity();</span>
+<span class="fc" id="L49">        entity.setId(propiedad.getId());</span>
+<span class="fc" id="L50">        entity.setNombre(propiedad.getNombre());</span>
+<span class="fc" id="L51">        entity.setDescripcion(propiedad.getDescripcion());</span>
+<span class="fc" id="L52">        entity.setPrecio(propiedad.getPrecio());</span>
+<span class="fc" id="L53">        entity.setEstado(propiedad.getEstado());</span>
+<span class="fc" id="L54">        entity.setUltimaActualizacion(</span>
+<span class="fc" id="L55">            LocalDateTime.ofInstant(propiedad.getUltimaActualizacion(), ZoneOffset.UTC)</span>
+        );
+<span class="fc" id="L57">        return entity;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

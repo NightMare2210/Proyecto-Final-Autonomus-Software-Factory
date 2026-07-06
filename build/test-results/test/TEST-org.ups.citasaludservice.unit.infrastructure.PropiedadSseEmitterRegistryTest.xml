@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.449Z" hostname="MacBook-Pro-de-Brando.local" time="0.048">
+  <properties/>
+  <testcase name="remover_id_inexistente_no_lanza_excepcion()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.038"/>
+  <testcase name="remover_emitter_existente()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.003"/>
+  <testcase name="notificar_con_emitter_muerto_lo_elimina()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.002"/>
+  <testcase name="agregar_cuando_send_lanza_ioexception_completa_con_error()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.001"/>
+  <testcase name="notificar_sin_emitters_registrados_no_lanza_excepcion()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.001"/>
+  <testcase name="agregar_con_initial_event_llama_send()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.0"/>
+  <testcase name="agregar_sin_initial_event_no_llama_send()" classname="org.ups.citasaludservice.unit.infrastructure.PropiedadSseEmitterRegistryTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.290Z" hostname="MacBook-Pro-de-Brando.local" time="0.027">
+  <properties/>
+  <testcase name="fresh_state_tras_put_estado()" classname="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" time="0.011"/>
+  <testcase name="get_listado_retorna_200_con_3_items()" classname="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" time="0.003"/>
+  <testcase name="get_propiedad_disponible_retorna_200()" classname="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" time="0.002"/>
+  <testcase name="get_propiedad_id_inexistente_retorna_404()" classname="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" time="0.003"/>
+  <testcase name="put_estado_vendida_a_disponible_retorna_400()" classname="org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest" time="0.003"/>
+  <system-out><![CDATA[2026-07-05T22:59:26.291-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest]: PropiedadControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.292-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest
+2026-07-05T22:59:26.292-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest]: PropiedadControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.293-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.PropiedadControllerIntegrationTest
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

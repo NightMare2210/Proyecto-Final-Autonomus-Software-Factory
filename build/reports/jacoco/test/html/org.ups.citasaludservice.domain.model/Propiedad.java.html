@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Propiedad.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">citasalud-service</a> &gt; <a href="index.source.html" class="el_package">org.ups.citasaludservice.domain.model</a> &gt; <span class="el_source">Propiedad.java</span></div><h1>Propiedad.java</h1><pre class="source lang-java linenums">package org.ups.citasaludservice.domain.model;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+
+public class Propiedad {
+
+    private final String id;
+    private final String nombre;
+    private final String descripcion;
+    private final BigDecimal precio;
+    private EstadoPropiedad estado;
+    private Instant ultimaActualizacion;
+
+    public Propiedad(String id, String nombre, String descripcion, BigDecimal precio,
+<span class="fc" id="L16">                     EstadoPropiedad estado, Instant ultimaActualizacion) {</span>
+<span class="fc" id="L17">        this.id = id;</span>
+<span class="fc" id="L18">        this.nombre = nombre;</span>
+<span class="fc" id="L19">        this.descripcion = descripcion;</span>
+<span class="fc" id="L20">        this.precio = precio;</span>
+<span class="fc" id="L21">        this.estado = estado;</span>
+<span class="fc" id="L22">        this.ultimaActualizacion = ultimaActualizacion;</span>
+<span class="fc" id="L23">    }</span>
+
+    public void cambiarEstado(EstadoPropiedad nuevo) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (!estado.transicionesPermitidas().contains(nuevo)) {</span>
+<span class="fc" id="L27">            throw new EstadoTransicionInvalidaException(estado, nuevo);</span>
+        }
+<span class="fc" id="L29">        this.estado = nuevo;</span>
+<span class="fc" id="L30">        this.ultimaActualizacion = Instant.now();</span>
+<span class="fc" id="L31">    }</span>
+
+    public AccionesPermitidas accionesPermitidas() {
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        return new AccionesPermitidas(</span>
+            estado == EstadoPropiedad.DISPONIBLE,
+            estado != EstadoPropiedad.VENDIDA
+        );
+    }
+
+<span class="fc" id="L40">    public String getId()                      { return id; }</span>
+<span class="fc" id="L41">    public String getNombre()                  { return nombre; }</span>
+<span class="fc" id="L42">    public String getDescripcion()             { return descripcion; }</span>
+<span class="fc" id="L43">    public BigDecimal getPrecio()              { return precio; }</span>
+<span class="fc" id="L44">    public EstadoPropiedad getEstado()         { return estado; }</span>
+<span class="fc" id="L45">    public Instant getUltimaActualizacion()    { return ultimaActualizacion; }</span>
+
+<span class="fc" id="L47">    public record AccionesPermitidas(boolean puedeAgendarVisita, boolean puedeContactar) {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

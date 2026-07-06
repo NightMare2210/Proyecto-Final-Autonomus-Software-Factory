@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.unit.domain.PropiedadTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.447Z" hostname="MacBook-Pro-de-Brando.local" time="0.002">
+  <properties/>
+  <testcase name="puede_agendar_visita_false_para_reservada()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="cambiar_estado_desde_vendida_lanza_excepcion()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="puede_agendar_visita_true_para_disponible()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="acciones_permitidas_para_disponible()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.001"/>
+  <testcase name="acciones_permitidas_para_reservada()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="creacion_con_estado_inicial_disponible()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="cambiar_estado_disponible_desde_vendida_lanza_excepcion()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="ambas_flags_false_para_vendida()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="estado_transicion_invalida_exception_expone_estados()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.001"/>
+  <testcase name="propiedad_no_encontrada_exception_expone_id()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <testcase name="transicion_disponible_a_reservada_valida()" classname="org.ups.citasaludservice.unit.domain.PropiedadTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

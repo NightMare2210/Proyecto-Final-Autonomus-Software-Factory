@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.ups.citasaludservice.integration.SseLatencyTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2026-07-06T03:59:26.318Z" hostname="MacBook-Pro-de-Brando.local" time="0.018">
+  <properties/>
+  <testcase name="sse_endpoint_activo_responde_con_text_event_stream()" classname="org.ups.citasaludservice.integration.SseLatencyTest" time="0.007"/>
+  <testcase name="put_estado_seguido_de_get_refleja_cambio_en_menos_de_2_segundos()" classname="org.ups.citasaludservice.integration.SseLatencyTest" time="0.008"/>
+  <system-out><![CDATA[2026-07-05T22:59:26.318-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.SseLatencyTest]: SseLatencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.319-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.SseLatencyTest
+2026-07-05T22:59:26.319-05:00  INFO 64457 --- [citasalud-service] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [org.ups.citasaludservice.integration.SseLatencyTest]: SseLatencyTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-07-05T22:59:26.320-05:00  INFO 64457 --- [citasalud-service] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration org.ups.citasaludservice.CitasaludServiceApplication for test class org.ups.citasaludservice.integration.SseLatencyTest
+2026-07-05T22:59:26.337-05:00  INFO 64457 --- [citasalud-service] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-07-05T22:59:26.338-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2026-07-05T22:59:26.363-05:00  INFO 64457 --- [citasalud-service] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
